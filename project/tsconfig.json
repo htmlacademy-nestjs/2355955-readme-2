@@ -8,6 +8,30 @@
     },
     {
       "path": "./apps/user"
+    },
+    {
+      "path": "./apps/post-e2e"
+    },
+    {
+      "path": "./apps/post"
+    },
+    {
+      "path": "./apps/notification-e2e"
+    },
+    {
+      "path": "./apps/notification"
+    },
+    {
+      "path": "./apps/api-gateway-e2e"
+    },
+    {
+      "path": "./apps/api-gateway"
+    },
+    {
+      "path": "./apps/storage-e2e"
+    },
+    {
+      "path": "./apps/storage"
     }
   ]
 }
