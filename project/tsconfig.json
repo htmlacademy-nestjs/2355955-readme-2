@@ -32,6 +32,15 @@
     },
     {
       "path": "./apps/storage"
+    },
+    {
+      "path": "./libs/app/types"
+    },
+    {
+      "path": "./libs/app/helpers"
+    },
+    {
+      "path": "./libs/app/core"
     }
   ]
 }
