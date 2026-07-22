@@ -1,0 +1,96 @@
+# Create a video post
+POST http://localhost:3000/api/posts HTTP/1.1
+Content-Type: application/json
+
+{
+  "type": "video",
+  "title": "How to build NestJS REST API",
+  "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  "tags": ["nestjs", "backend"]
+}
+
+###
+
+# Create a text post
+POST http://localhost:3000/api/posts HTTP/1.1
+Content-Type: application/json
+
+{
+  "type": "text",
+  "title": "NestJS tips",
+  "announcement": "Short tips for NestJS beginners",
+  "text": "Use modules, keep controllers thin, put logic in services.",
+  "tags": ["nestjs", "tips"]
+}
+
+###
+
+# Create a quote post
+POST http://localhost:3000/api/posts HTTP/1.1
+Content-Type: application/json
+
+{
+  "type": "quote",
+  "quote": "Talk is cheap. Show me the code.",
+  "author": "Linus Torvalds",
+  "tags": ["quote"]
+}
+
+###
+
+# Create a photo post
+POST http://localhost:3000/api/posts HTTP/1.1
+Content-Type: application/json
+
+{
+  "type": "photo",
+  "photoPath": "/uploads/photo.jpg",
+  "tags": ["photo"]
+}
+
+###
+
+# Create a link post
+POST http://localhost:3000/api/posts HTTP/1.1
+Content-Type: application/json
+
+{
+  "type": "link",
+  "link": "https://nestjs.com",
+  "description": "Official NestJS website",
+  "tags": ["link", "nestjs"]
+}
+
+###
+
+# Get all posts
+GET http://localhost:3000/api/posts HTTP/1.1
+
+###
+
+# Get post by ID
+GET http://localhost:3000/api/posts/f8c773df-15fe-43db-ba9f-c67a73788353 HTTP/1.1
+
+###
+
+# Update post by ID
+PATCH http://localhost:3000/api/posts/00000000-0000-0000-0000-000000000001 HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Updated NestJS REST API guide",
+  "tags": ["nestjs", "backend", "updated"],
+  "status": "draft"
+}
+
+###
+
+# Repost post by ID
+POST http://localhost:3000/api/posts/00000000-0000-0000-0000-000000000001/repost HTTP/1.1
+
+###
+
+# Delete post by ID
+DELETE http://localhost:3000/api/posts/b21e9992-d34b-4f88-95e4-af01102a57d3 HTTP/1.1
+
+###

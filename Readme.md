@@ -1,7 +1,7 @@
 # Личный проект «Readme»
 
 * Студент: [Евгений Мушков](https://up.htmlacademy.ru/nodejs-2-individual/2/user/2355955).
-* Наставник: `Неизвестно`.
+* Наставник: [Дмитрий Виноградов](https://htmlacademy.ru/profile/id2696709).
 
 ---
 
