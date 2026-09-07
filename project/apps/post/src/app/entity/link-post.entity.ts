@@ -1,4 +1,4 @@
-import { Entity } from '@project/core';
+import { Entity } from '@project/core-repository';
 import { LinkPost, PostStatus, PostType } from '@project/types';
 
 export class LinkPostEntity implements LinkPost, Entity<string> {

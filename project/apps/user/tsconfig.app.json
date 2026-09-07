@@ -23,7 +23,7 @@
   ],
   "references": [
     {
-      "path": "../../libs/app/core/tsconfig.lib.json"
+      "path": "../../libs/app/core/repository/tsconfig.lib.json"
     },
     {
       "path": "../../libs/app/types/tsconfig.lib.json"

@@ -1,5 +1,5 @@
 import { AuthUser } from '@project/types';
-import { Entity } from '@project/core';
+import { Entity } from '@project/core-repository';
 import { compare, genSalt, hash } from 'bcrypt';
 import { SALT_ROUNDS } from './user.constant';
 export class UserEntity implements AuthUser, Entity<string> {
