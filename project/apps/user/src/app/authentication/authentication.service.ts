@@ -31,7 +31,6 @@ export class AuthenticationService {
     };
 
     const existUser = await this.userRepository.findByEmail(email);
-
     if (existUser) {
       throw new ConflictException(AUTH_USER_EXISTS);
     }
@@ -59,7 +58,7 @@ export class AuthenticationService {
   public async getUser(id: string) {
     const user = await this.userRepository.findById(id);
     if (!user) {
-      throw new NotFoundException(AUTH_USER_NOT_FOUND);
+      throw new NotFoundException(`User with id ${id} not found`);
     }
     return user;
   }

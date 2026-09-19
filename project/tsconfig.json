@@ -41,6 +41,9 @@
     },
     {
       "path": "./libs/app/core/repository"
+    },
+    {
+      "path": "./libs/app/core/user-config"
     }
   ]
 }
