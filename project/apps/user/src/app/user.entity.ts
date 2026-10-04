@@ -12,6 +12,7 @@ export class UserEntity implements AuthUser, Entity<string> {
   public createdAt: Date;
 
   constructor(user: AuthUser) {
+    this.id = user.id;
     this.email = user.email;
     this.firstname = user.firstname;
     this.lastname = user.lastname;

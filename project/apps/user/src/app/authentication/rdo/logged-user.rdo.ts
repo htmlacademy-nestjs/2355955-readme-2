@@ -15,11 +15,4 @@ export class LoggedUserRdo {
   })
   @Expose()
   public email!: string;
-
-  @ApiProperty({
-    description: 'Access token',
-    example: 'user@user.local',
-  })
-  @Expose()
-  public accessToken!: string;
 }
