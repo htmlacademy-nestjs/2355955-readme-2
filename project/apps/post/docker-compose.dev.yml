@@ -1,0 +1,111 @@
+# Версия формата файла Compose (сейчас это скорее формальность,
+# но многие примеры её оставляют).
+version: '3.8'
+
+# Секция, где описываются контейнеры-сервисы.
+services:
+  # Сервис PostgreSQL: образ, настройки, тома, сеть.
+  postgres:
+    # Какой образ Docker скачает и запустит.
+    image: postgres:17
+
+    # Имя контейнера в `docker ps` (удобнее, чем автоимя).
+    container_name: postgres
+
+    # Автоматически перезапускать контейнер, если он упал
+    # или если хост перезагрузился.
+    restart: unless-stopped
+
+    # Переменные окружения, которые передаются внутрь контейнера.
+    environment:
+      # Имя суперпользователя PostgreSQL (по умолчанию "postgres").
+      POSTGRES_USER: postgres
+      # Пароль суперпользователя PostgreSQL.
+      POSTGRES_PASSWORD: postgres
+      # Имя базы данных, которая создастся при первом старте.
+      POSTGRES_DB: mydb
+
+    # Маппинг портов: "хост:контейнер".
+    # 5432 на хосте -> 5432 внутри контейнера.
+    # Если порт уже занят, можно изменить на "5433:5432".
+    ports:
+      - '5432:5432'
+
+    # Тома: где и как хранить данные PostgreSQL на хосте.
+    volumes:
+      # Именованный том postgres_data монтируется в /var/lib/postgresql/data.
+      # Там лежат файлы базы, они переживут удаление контейнера.
+      - postgres_data:/var/lib/postgresql/data
+
+    # Подключение к сети, чтобы pgAdmin мог достучаться по имени "postgres".
+    networks:
+      - db_network
+
+    # Ограничения ресурсов (опционально, можно убрать).
+    # Ограничиваем память и CPU, чтобы БД не съела всё.
+    deploy:
+      resources:
+        limits:
+          # Максимум 1 ГБ оперативной памяти.
+          memory: 1G
+          # Максимум 1.5 ядра CPU.
+          cpus: '1.5'
+
+  # Сервис pgAdmin: веб-интерфейс для управления PostgreSQL.
+  pgadmin:
+    # Официальный образ pgAdmin.
+    image: dpage/pgadmin4:latest
+
+    # Имя контейнера для удобства.
+    container_name: pgadmin4
+
+    # Автоперезапуск при падении/ребуте.
+    restart: unless-stopped
+
+    # Маппинг портов: 5050 на хосте -> 80 внутри контейнера.
+    # В браузере открываешь http://localhost:5050
+    ports:
+      - '5050:80'
+
+    # Переменные окружения для первичной настройки pgAdmin.
+    environment:
+      # Email-логин администратора pgAdmin (для входа в веб-интерфейс).
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      # Пароль администратора pgAdmin.
+      PGADMIN_DEFAULT_PASSWORD: change-me
+      # Отключаем встроенный почтовый сервер (не нужен в контейнере).
+      PGADMIN_DISABLE_POSTFIX: 'true'
+
+    # Тома для pgAdmin.
+    volumes:
+      # Именованный том для хранения настроек pgAdmin
+      # (список серверов, пользовательские настройки и т.п.).
+      - pgadmin_data:/var/lib/pgadmin
+      # (Опционально) Файл servers.json для автодобавления серверов.
+      # Закомментируй, если не используешь servers.json.
+      # - ./servers.json:/pgadmin4/servers.json:ro
+
+    # Подключение к той же сети, что и postgres.
+    # Внутри сети pgAdmin видит сервис по имени "postgres".
+    networks:
+      - db_network
+
+    # Зависимость: запускать pgadmin после postgres.
+    # Это не ждёт, пока БД полностью готова, просто порядок старта.
+    depends_on:
+      - postgres
+
+# Секция с именованными томами.
+# Docker сам создаст их при первом `docker compose up`.
+volumes:
+  # Том для данных PostgreSQL.
+  postgres_data:
+  # Том для настроек pgAdmin.
+  pgadmin_data:
+
+# Секция с сетями.
+networks:
+  # Именованная сеть, в которой будут postgres и pgadmin.
+  db_network:
+    # Явное имя сети (будет видно в `docker network ls`).
+    name: db_network

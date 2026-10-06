@@ -6,14 +6,19 @@
   "private": true,
   "dependencies": {
     "@nestjs/common": "^11.0.0",
+    "@nestjs/config": "^12.0.0",
     "@nestjs/core": "^11.0.0",
+    "@nestjs/mongoose": "^12.0.0",
     "@nestjs/platform-express": "^11.0.0",
     "@nestjs/swagger": "^11.4.6",
     "@types/bcrypt": "^6.0.0",
     "axios": "^1.6.0",
     "bcrypt": "^6.0.0",
     "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1",
     "dayjs": "^1.11.21",
+    "joi": "^18.2.8",
+    "mongoose": "^9.10.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.0"
   },
@@ -52,6 +57,7 @@
   },
   "workspaces": [
     "apps/*",
-    "libs/app/*"
+    "libs/app/*",
+    "libs/app/core/*"
   ]
 }

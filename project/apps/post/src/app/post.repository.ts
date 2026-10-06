@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { BaseMemoryRepository } from '@project/core';
+import { BaseMemoryRepository } from '@project/core-repository';
 import { PostEntity } from './entity/post-entity.type';
 
 @Injectable()

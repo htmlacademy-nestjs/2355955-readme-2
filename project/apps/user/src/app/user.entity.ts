@@ -1,5 +1,5 @@
 import { AuthUser } from '@project/types';
-import { Entity } from '@project/core';
+import { Entity } from '@project/core-repository';
 import { compare, genSalt, hash } from 'bcrypt';
 import { SALT_ROUNDS } from './user.constant';
 export class UserEntity implements AuthUser, Entity<string> {
@@ -12,6 +12,7 @@ export class UserEntity implements AuthUser, Entity<string> {
   public createdAt: Date;
 
   constructor(user: AuthUser) {
+    this.id = user.id;
     this.email = user.email;
     this.firstname = user.firstname;
     this.lastname = user.lastname;
@@ -39,5 +40,8 @@ export class UserEntity implements AuthUser, Entity<string> {
   }
   public async comparePassword(password: string): Promise<boolean> {
     return compare(password, this.passwordHash);
+  }
+  static fromObject(data: AuthUser): UserEntity {
+    return new UserEntity(data);
   }
 }
