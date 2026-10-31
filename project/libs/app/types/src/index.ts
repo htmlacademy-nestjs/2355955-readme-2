@@ -1,4 +1,5 @@
 export type { User } from './lib/user.interface';
+export type { Comment } from './lib/comment.interface';
 export type { AuthUser } from './lib/auth-user.interface';
 export { PostType, PostStatus } from './lib/post.interface';
 export type {

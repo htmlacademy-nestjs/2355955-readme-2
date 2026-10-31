@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PostType {
+  video
+  text
+  quote
+  photo
+  link
+
+  @@map("post_type")
+}
+
+enum PostStatus {
+  published
+  draft
+
+  @@map("post_status")
+}
+
+model Post {
+  id   String   @id @default(uuid()) @db.Uuid
+  type PostType
+
+  tags         String[] @default([])
+  title        String?
+  videoUrl     String?  @map("video_url")
+  announcement String?
+  text         String?
+  quote        String?
+  author       String?
+  photoPath    String?  @map("photo_path")
+  link         String?
+  description  String?
+
+  userId             String     @map("user_id")
+  status             PostStatus @default(published)
+  createdAt          DateTime   @default(now()) @map("created_at")
+  publishedAt        DateTime   @default(now()) @map("published_at")
+  isRepost           Boolean    @default(false) @map("is_repost")
+  originalPostId     String?    @map("original_post_id") @db.Uuid
+  originalPostUserId String?    @map("original_post_user_id")
+
+  likes    Like[]
+  comments Comment[]
+
+  @@index([userId])
+  @@index([type])
+  @@index([originalPostId])
+  @@map("posts")
+}
+
+model Like {
+  id        String   @id @default(uuid()) @db.Uuid
+  postId    String   @map("post_id") @db.Uuid
+  userId    String   @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
+  @@index([postId])
+  @@map("likes")
+}
+
+model Comment {
+  id        String   @id @default(uuid()) @db.Uuid
+  postId    String   @map("post_id") @db.Uuid
+  userId    String   @map("user_id")
+  text      String   @db.VarChar(300)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId, createdAt])
+  @@map("comments")
+}
+
+model Subscription {
+  id           String   @id @default(uuid()) @db.Uuid
+  subscriberId String   @map("subscriber_id")
+  authorId     String   @map("author_id")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@unique([subscriberId, authorId])
+  @@index([subscriberId])
+  @@map("subscriptions")
+}
